@@ -1,31 +1,28 @@
-import React from "react";
-import createClass from "create-react-class";
-import PropTypes from "prop-types";
-import Select from "react-select";
-import "react-select/dist/react-select.css";
-import { getCountries } from "../utils/requests";
-import { forIn } from "lodash";
-
-const STATES = require("../data/states");
+import React from 'react';
+import createClass from 'create-react-class';
+import PropTypes from 'prop-types';
+import Select from 'react-select';
+import 'react-select/dist/react-select.css';
+import { getCountries } from '../utils/requests';
 
 var StatesField = createClass({
-  displayName: "StatesField",
+  displayName: 'StatesField',
   propTypes: {
     label: PropTypes.string,
     searchable: PropTypes.bool
   },
   getDefaultProps() {
     return {
-      label: "States:",
+      label: 'States:',
       searchable: true
     };
   },
   getInitialState() {
     return {
-      country: "AU",
+      country: 'AU',
       disabled: false,
       searchable: this.props.searchable,
-      selectValue: "new-south-wales",
+      selectValue: 'EUR',
       clearable: true,
       rtl: false
     };
@@ -35,15 +32,15 @@ var StatesField = createClass({
       .then(countries =>
         this.setState({
           states: Object.entries(countries.symbols).map(([k, v]) => ({
-            key: k,
-            label: v
+            value: k,
+            label: `${k} - ${v}`
           }))
         })
       )
       .catch(e => console.log(`Something went wrong: ${e}`));
   },
   clearValue(e) {
-    this.select.setInputValue("");
+    this.select.setInputValue('');
   },
   switchCountry(e) {
     var newCountry = e.target.value;
@@ -81,7 +78,7 @@ var StatesField = createClass({
           simpleValue
           clearable={this.state.clearable}
           name="selected-state"
-          disabled={this.state.disabled}
+          disabled={this.props.disabled}
           value={this.state.selectValue}
           onChange={this.updateValue}
           rtl={this.state.rtl}
