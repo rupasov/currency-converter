@@ -4,6 +4,8 @@ import PropTypes from "prop-types";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
 import { getCountries } from "../utils/requests";
+import { forIn } from "lodash";
+
 const STATES = require("../data/states");
 
 var StatesField = createClass({
@@ -32,7 +34,10 @@ var StatesField = createClass({
     getCountries()
       .then(countries =>
         this.setState({
-          obj: countries.symbols
+          states: Object.entries(countries.symbols).map(([k, v]) => ({
+            key: k,
+            label: v
+          }))
         })
       )
       .catch(e => console.log(`Something went wrong: ${e}`));
@@ -61,7 +66,7 @@ var StatesField = createClass({
     this.setState(newState);
   },
   render() {
-    var options = STATES[this.state.country];
+    var options = this.state.states;
     return (
       <div className="section">
         <Select
