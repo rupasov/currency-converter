@@ -3,7 +3,7 @@ import createClass from "create-react-class";
 import PropTypes from "prop-types";
 import Select from "react-select";
 import "react-select/dist/react-select.css";
-
+import { getCountries } from "../utils/requests";
 const STATES = require("../data/states");
 
 var StatesField = createClass({
@@ -27,6 +27,15 @@ var StatesField = createClass({
       clearable: true,
       rtl: false
     };
+  },
+  componentDidMount() {
+    getCountries()
+      .then(countries =>
+        this.setState({
+          obj: countries.symbols
+        })
+      )
+      .catch(e => console.log(`Something went wrong: ${e}`));
   },
   clearValue(e) {
     this.select.setInputValue("");
