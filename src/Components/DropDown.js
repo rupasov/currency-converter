@@ -3,7 +3,7 @@ import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import { getCountries } from '../utils/requests';
+import { getSymbols } from '../utils/requests';
 
 var StatesField = createClass({
   displayName: 'StatesField',
@@ -19,16 +19,15 @@ var StatesField = createClass({
   },
   getInitialState() {
     return {
-      country: 'AU',
-      disabled: false,
+      disabled: this.props.disabled,
       searchable: this.props.searchable,
-      selectValue: 'EUR',
+      selectValue: this.props.selectValue,
       clearable: true,
       rtl: false
     };
   },
   componentDidMount() {
-    getCountries()
+    getSymbols()
       .then(countries =>
         this.setState({
           states: Object.entries(countries.symbols).map(([k, v]) => ({
@@ -78,7 +77,7 @@ var StatesField = createClass({
           simpleValue
           clearable={this.state.clearable}
           name="selected-state"
-          disabled={this.props.disabled}
+          disabled={this.state.disabled}
           value={this.state.selectValue}
           onChange={this.updateValue}
           rtl={this.state.rtl}

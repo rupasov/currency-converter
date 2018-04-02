@@ -8,6 +8,7 @@
     "material-ui": "^0.20.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-number-format": "^3.3.0",
     "react-scripts": "1.1.1",
     "react-select": "^1.2.1"
   },
