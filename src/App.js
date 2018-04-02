@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import StatesField from './Components/DropDown';
+import StatesField from './components/DropDown';
 import RaisedButton from 'material-ui/RaisedButton';
-import TextField from 'material-ui/TextField';
-import NumberFormat from 'react-number-format';
 import { getRate } from './utils/requests';
+import NumberInput from './components/NumberInput';
 
 class App extends Component {
   render() {
@@ -23,14 +22,8 @@ class App extends Component {
             flexDirection: 'column'
           }}
         >
-          <div>
-            {/* <TextField hintText="Hint Text" /> */}
-            <NumberFormat
-              customInput={TextField}
-              format="### ### ### ### ### ### ###"
-            />
-          </div>
           <br />
+          <NumberInput />
           <div>
             <StatesField disabled selectValue="EUR" />
           </div>
@@ -41,7 +34,7 @@ class App extends Component {
             <RaisedButton
               label="Calc"
               primary
-              onClick={() => console.log(getRate())}
+              onClick={() => console.log(getRate('USD'))}
             />
           </div>
           <div>

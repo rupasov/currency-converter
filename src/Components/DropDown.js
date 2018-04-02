@@ -3,8 +3,9 @@ import createClass from 'create-react-class';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import { getSymbols } from '../utils/requests';
+import { connect } from 'react-redux';
 
+import { fetchSymbols } from '../actions';
 var StatesField = createClass({
   displayName: 'StatesField',
   propTypes: {
@@ -27,17 +28,10 @@ var StatesField = createClass({
     };
   },
   componentDidMount() {
-    getSymbols()
-      .then(countries =>
-        this.setState({
-          states: Object.entries(countries.symbols).map(([k, v]) => ({
-            value: k,
-            label: `${k} - ${v}`
-          }))
-        })
-      )
-      .catch(e => console.log(`Something went wrong: ${e}`));
+    const { fetchSymbols } = this.props;
+    fetchSymbols();
   },
+
   clearValue(e) {
     this.select.setInputValue('');
   },
@@ -62,7 +56,7 @@ var StatesField = createClass({
     this.setState(newState);
   },
   render() {
-    var options = this.state.states;
+    var options = this.props.symbols;
     return (
       <div className="section">
         <Select
@@ -88,4 +82,12 @@ var StatesField = createClass({
   }
 });
 
-export default StatesField;
+const mapStateToProps = ({ currency }) => ({
+  symbols: currency.symbols
+});
+
+const mapDispatchToProps = {
+  fetchSymbols
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(StatesField);

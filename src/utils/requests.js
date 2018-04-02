@@ -5,9 +5,9 @@ export const getSymbols = () =>
     .then(res => res.json())
     .catch(e => console.log(`Something went wrong ${e}`));
 
-export const getRate = () =>
+export const getRate = currency =>
   fetch(
-    'http://data.fixer.io/api/latest?access_key=dd172c8fd7d17ffbe9bbc7b890ea5fc0&symbols=USD'
+    `http://data.fixer.io/api/latest?access_key=dd172c8fd7d17ffbe9bbc7b890ea5fc0&symbols=${currency}`
   )
     .then(res => res.json())
     .catch(e => console.log(`Something went wrong ${e}`));
