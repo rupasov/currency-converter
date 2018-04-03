@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import StatesField from './components/DropDown';
 import RaisedButton from 'material-ui/RaisedButton';
 import { getRate } from './utils/requests';
 import NumberInput from './components/NumberInput';
+import { connect } from 'react-redux';
+import { changeAmount } from './actions';
 
 class App extends Component {
   render() {
@@ -23,7 +24,7 @@ class App extends Component {
           }}
         >
           <br />
-          <NumberInput />
+          <NumberInput onChange={this.props.changeAmount} />
           <div>
             <StatesField disabled selectValue="EUR" />
           </div>
@@ -46,4 +47,12 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapStateToProps = ({ currency }) => ({
+  amount: currency.amount
+});
+
+const mapDispatchToProps = {
+  changeAmount
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

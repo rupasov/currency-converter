@@ -5,7 +5,8 @@ import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 import { connect } from 'react-redux';
 
-import { fetchSymbols } from '../actions';
+import { fetchSymbols, changeTargetCurrency } from '../actions';
+
 var StatesField = createClass({
   displayName: 'StatesField',
   propTypes: {
@@ -28,32 +29,13 @@ var StatesField = createClass({
     };
   },
   componentDidMount() {
-    const { fetchSymbols } = this.props;
-    fetchSymbols();
-  },
-
-  clearValue(e) {
-    this.select.setInputValue('');
-  },
-  switchCountry(e) {
-    var newCountry = e.target.value;
-    this.setState({
-      country: newCountry,
-      selectValue: null
-    });
+    this.props.fetchSymbols();
   },
   updateValue(newValue) {
+    this.props.changeTargetCurrency(newValue);
     this.setState({
       selectValue: newValue
     });
-  },
-  focusStateSelect() {
-    this.refs.stateSelect.focus();
-  },
-  toggleCheckbox(e) {
-    let newState = {};
-    newState[e.target.name] = e.target.checked;
-    this.setState(newState);
   },
   render() {
     var options = this.props.symbols;
@@ -83,11 +65,13 @@ var StatesField = createClass({
 });
 
 const mapStateToProps = ({ currency }) => ({
-  symbols: currency.symbols
+  symbols: currency.symbols,
+  targetCurrency: currency.targetCurrency
 });
 
 const mapDispatchToProps = {
-  fetchSymbols
+  fetchSymbols,
+  changeTargetCurrency
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(StatesField);
