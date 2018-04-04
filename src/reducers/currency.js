@@ -40,7 +40,7 @@ const currency = (state = initState, action) => {
     case CONVERT:
       return {
         ...state,
-        convertedValue: action.rate * state.amount
+        convertedValue: state.currentRate * state.amount
       };
     default:
       return state;

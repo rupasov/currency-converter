@@ -21,10 +21,10 @@ export const fetchSymbols = () => dispatch =>
     )
     .catch(e => console.log(`Something went wrong: ${e}`));
 
-export const fetchRate = targetCurrency => dispatch =>
+export const calcRate = targetCurrency => dispatch =>
   getRate(targetCurrency)
     .then(res => dispatch(saveCurrentRate(res.rates[targetCurrency])))
-    .then(res => dispatch(convert(res.rates[targetCurrency])))
+    .then(res => dispatch(convert()))
     .catch(e => console.log(`Something went wrong: ${e}`));
 
 export const loadSymbols = symbols => ({
@@ -42,12 +42,11 @@ export const changeAmount = amount => ({
   amount
 });
 
-export const saveCurrentRate = rate => ({
+export const saveCurrentRate = currentRate => ({
   type: SAVE_CURRENT_RATE,
-  rate
+  currentRate
 });
 
-export const convert = rate => ({
-  type: CONVERT,
-  rate
+export const convert = () => ({
+  type: CONVERT
 });

@@ -1,13 +1,17 @@
 import React, { Component } from 'react';
-import './App.css';
-import StatesField from './components/DropDown';
-import RaisedButton from 'material-ui/RaisedButton';
-import { getRate } from './utils/requests';
-import NumberInput from './components/NumberInput';
 import { connect } from 'react-redux';
-import { changeAmount } from './actions';
+import RaisedButton from 'material-ui/RaisedButton';
+import StatesField from './components/DropDown';
+import NumberInput from './components/NumberInput';
+import { getRate } from './utils/requests';
+import { fetchSymbols, changeAmount, calcRate } from './actions';
+import './App.css';
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchSymbols();
+  }
+
   render() {
     return (
       <div className="App">
@@ -26,20 +30,24 @@ class App extends Component {
           <br />
           <NumberInput onChange={this.props.changeAmount} />
           <div>
-            <StatesField disabled selectValue="EUR" />
+            <StatesField
+              disabled
+              selectValue="EUR"
+              options={[{ label: 'EUR - Euro', value: 'EUR' }]}
+            />
           </div>
           <div>
-            <StatesField selectValue="USD" />
+            <StatesField selectValue="USD" options={this.props.symbols} />
           </div>
           <div>
             <RaisedButton
               label="Calc"
               primary
-              onClick={() => console.log(getRate('USD'))}
+              onClick={() => this.props.calcRate(this.props.targetCurrency)}
             />
           </div>
           <div>
-            <p>dsfsdf</p>
+            <p>{this.props.convertedValue}</p>
           </div>
         </div>
       </div>
@@ -48,11 +56,16 @@ class App extends Component {
 }
 
 const mapStateToProps = ({ currency }) => ({
-  amount: currency.amount
+  symbols: currency.symbols,
+  amount: currency.amount,
+  targetCurrency: currency.targetCurrency,
+  convertedValue: currency.convertedValue
 });
 
 const mapDispatchToProps = {
-  changeAmount
+  fetchSymbols,
+  changeAmount,
+  calcRate
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
