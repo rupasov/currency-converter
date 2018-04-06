@@ -3,9 +3,12 @@ import {
   CHANGE_TARGET_CURRENCY,
   CHANGE_AMOUNT,
   SAVE_CURRENT_RATE,
-  CONVERT
+  CONVERT,
+  SAVE_HISTORICAL_DATA
 } from '../constants';
-import { getSymbols, getRate } from '../utils/requests';
+import { getSymbols, getRate, getHistoricalRate } from '../utils/requests';
+import { getDays } from '../utils/date';
+import { format } from 'date-fns';
 
 export const fetchSymbols = () => dispatch =>
   getSymbols()
@@ -26,6 +29,22 @@ export const calcRate = targetCurrency => dispatch =>
     .then(res => dispatch(saveCurrentRate(res.rates[targetCurrency])))
     .then(res => dispatch(convert()))
     .catch(e => console.log(`Something went wrong: ${e}`));
+
+export const getGraph = targetCurrency => async dispatch => {
+  try {
+    const historicalData = await Promise.all(
+      getDays().map(day => getHistoricalRate(targetCurrency, day))
+    );
+    const a = historicalData.map(data => ({
+      x: format(new Date(data.date), 'D-MMM-YY'),
+      y: data.rates[targetCurrency]
+    }));
+    console.log(a);
+    dispatch(saveHistoricalData(historicalData));
+  } catch (e) {
+    console.error(e);
+  }
+};
 
 export const loadSymbols = symbols => ({
   type: LOAD_SYMBOLS,
@@ -49,4 +68,9 @@ export const saveCurrentRate = currentRate => ({
 
 export const convert = () => ({
   type: CONVERT
+});
+
+export const saveHistoricalData = historicalData => ({
+  type: SAVE_HISTORICAL_DATA,
+  historicalData
 });

@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import StatesField from './components/DropDown';
 import NumberInput from './components/NumberInput';
+import { AreaChart } from 'react-easy-chart';
 import { getRate } from './utils/requests';
-import { fetchSymbols, changeAmount, calcRate } from './actions';
+import { fetchSymbols, changeAmount, calcRate, getGraph } from './actions';
 import './App.css';
+import { format } from 'date-fns';
 
 class App extends Component {
   componentDidMount() {
@@ -42,13 +44,41 @@ class App extends Component {
           <div>
             <RaisedButton
               label="Calc"
-              primary
+              labelColor="#ffffff"
+              backgroundColor="#56D5C0"
               onClick={() => this.props.calcRate(this.props.targetCurrency)}
+            />
+          </div>
+          <div>
+            <RaisedButton
+              label="Graph"
+              labelColor="#ffffff"
+              backgroundColor="#4568E5"
+              onClick={() => this.props.getGraph(this.props.targetCurrency)}
             />
           </div>
           <div>
             <p>{this.props.convertedValue}</p>
           </div>
+          {this.props.historicalData.length > 0 && (
+            <div>
+              <AreaChart
+                xType={'time'}
+                axes
+                width={700}
+                height={500}
+                interpolate={'cardinal'}
+                areaColors={['#F3AF75']}
+                grid
+                data={[
+                  this.props.historicalData.map(data => ({
+                    x: format(new Date(data.date), 'D-MMM-YY'),
+                    y: data.rates[this.props.targetCurrency]
+                  }))
+                ]}
+              />
+            </div>
+          )}
         </div>
       </div>
     );
@@ -59,13 +89,15 @@ const mapStateToProps = ({ currency }) => ({
   symbols: currency.symbols,
   amount: currency.amount,
   targetCurrency: currency.targetCurrency,
-  convertedValue: currency.convertedValue
+  convertedValue: currency.convertedValue,
+  historicalData: currency.historicalData
 });
 
 const mapDispatchToProps = {
   fetchSymbols,
   changeAmount,
-  calcRate
+  calcRate,
+  getGraph
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

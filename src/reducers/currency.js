@@ -3,7 +3,8 @@ import {
   CHANGE_TARGET_CURRENCY,
   CHANGE_AMOUNT,
   SAVE_CURRENT_RATE,
-  CONVERT
+  CONVERT,
+  SAVE_HISTORICAL_DATA
 } from '../constants';
 
 const initState = {
@@ -12,7 +13,8 @@ const initState = {
   targetCurrency: 'USD',
   amount: 1,
   currentRate: '',
-  convertedValue: ''
+  convertedValue: '',
+  historicalData: []
 };
 
 const currency = (state = initState, action) => {
@@ -41,6 +43,11 @@ const currency = (state = initState, action) => {
       return {
         ...state,
         convertedValue: state.currentRate * state.amount
+      };
+    case SAVE_HISTORICAL_DATA:
+      return {
+        ...state,
+        historicalData: action.historicalData
       };
     default:
       return state;

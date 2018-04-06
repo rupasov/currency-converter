@@ -1,9 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import NumberFormat from 'react-number-format';
-import NumberTextField from './NumberTextField';
 import TextField from 'material-ui/TextField';
-
-const a = NumberTextField;
 
 const NumberInput = ({ onChange }) => (
   <div>

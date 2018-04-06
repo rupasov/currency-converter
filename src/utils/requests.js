@@ -6,9 +6,15 @@ export const getSymbols = () =>
     .catch(e => console.log(`Something went wrong ${e}`));
 
 export const getRate = targetCurrency =>
-  console.log(targetCurrency) ||
   fetch(
     `http://data.fixer.io/api/latest?access_key=dd172c8fd7d17ffbe9bbc7b890ea5fc0&symbols=${targetCurrency}`
+  )
+    .then(res => res.json())
+    .catch(e => console.log(`Something went wrong ${e}`));
+
+export const getHistoricalRate = (targetCurrency, date) =>
+  fetch(
+    `http://data.fixer.io/api/${date}?access_key=dd172c8fd7d17ffbe9bbc7b890ea5fc0&symbols=${targetCurrency}`
   )
     .then(res => res.json())
     .catch(e => console.log(`Something went wrong ${e}`));
