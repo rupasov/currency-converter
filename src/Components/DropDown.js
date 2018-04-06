@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
 
-import { fetchSymbols, changeTargetCurrency } from '../actions';
-
-class StatesField extends Component {
+class DropDown extends Component {
   state = {
     disabled: this.props.disabled,
     searchable: this.props.searchable,
@@ -16,14 +13,14 @@ class StatesField extends Component {
   };
 
   updateValue = newValue => {
-    this.props.changeTargetCurrency(newValue);
+    this.props.onChange(newValue);
     this.setState({
       selectValue: newValue
     });
   };
 
   render() {
-    var options = this.props.options;
+    var options = this.props.symbols;
     return (
       <div className="section">
         <Select
@@ -49,14 +46,4 @@ class StatesField extends Component {
   }
 }
 
-const mapStateToProps = ({ currency }) => ({
-  //symbols: currency.symbols,
-  targetCurrency: currency.targetCurrency
-});
-
-const mapDispatchToProps = {
-  fetchSymbols,
-  changeTargetCurrency
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(StatesField);
+export default DropDown;

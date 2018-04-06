@@ -32,7 +32,8 @@ const currency = (state = initState, action) => {
     case CHANGE_AMOUNT:
       return {
         ...state,
-        amount: action.amount
+        amount: action.amount,
+        convertedValue: ''
       };
     case SAVE_CURRENT_RATE:
       return {

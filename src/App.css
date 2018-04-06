@@ -2,9 +2,14 @@ body {
   background-color: #ECF0F3;
 }
 
+input[type="text"] {
+  font-size: 16px;
+  padding-left: 8px;
+}
+
 .App {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-top: 100px;
+  margin-top: 60px;
 }

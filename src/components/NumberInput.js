@@ -9,7 +9,7 @@ const NumberInput = ({ onChange, value }) => (
       thousandSeparator
       allowNegative={false}
       onValueChange={values => onChange(values.value)}
-      style={{ height: '34px' }}
+      style={{ height: '34px', width: '77%' }}
     />
   </div>
 );

@@ -1,11 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import StatesField from './components/DropDown';
+import DropDown from './components/DropDown';
 import NumberInput from './components/NumberInput';
 import { AreaChart } from 'react-easy-chart';
 import { getRate } from './utils/requests';
-import { fetchSymbols, changeAmount, calcRate, getGraph } from './actions';
+import {
+  fetchSymbols,
+  changeAmount,
+  calcRate,
+  getGraph,
+  changeTargetCurrency
+} from './actions';
 import './App.css';
 import { format } from 'date-fns';
 import coupleWithDog from './img/doggos_walk.png';
@@ -23,6 +29,7 @@ class App extends Component {
       symbols,
       calcRate,
       getGraph,
+      changeTargetCurrency,
       convertedValue,
       targetCurrency,
       historicalData
@@ -41,14 +48,18 @@ class App extends Component {
             <br />
             <NumberInput onChange={changeAmount} value={amount} />
             <div style={{ width: '80%', marginBottom: '20px' }}>
-              <StatesField
+              <DropDown
                 disabled
                 selectValue="EUR"
-                options={[{ label: 'EUR - Euro', value: 'EUR' }]}
+                symbols={[{ label: 'EUR - Euro', value: 'EUR' }]}
               />
             </div>
             <div style={{ width: '80%', marginBottom: '20px' }}>
-              <StatesField selectValue="USD" options={symbols} />
+              <DropDown
+                selectValue="USD"
+                symbols={symbols}
+                onChange={changeTargetCurrency}
+              />
             </div>
             <div style={{ marginBottom: '20px', width: '80%' }}>
               <RaisedButton
@@ -59,9 +70,9 @@ class App extends Component {
                 onClick={() => calcRate(targetCurrency)}
               />
             </div>
-            <div style={{ marginBottom: '20px', width: '80%' }}>
+            <div style={{ marginBottom: '60px', width: '80%' }}>
               <RaisedButton
-                label="Show Graph"
+                label="Gimme Da Graph"
                 fullWidth
                 labelColor="#ffffff"
                 backgroundColor="#4568E5"
@@ -83,7 +94,7 @@ class App extends Component {
                   displayType={'text'}
                 />
                 <NumberFormat
-                  value={parseFloat(convertedValue).toFixed(6)}
+                  value={convertedValue}
                   suffix={` ${targetCurrency}`}
                   thousandSeparator
                   displayType={'text'}
@@ -123,6 +134,7 @@ const mapStateToProps = ({ currency }) => ({
 const mapDispatchToProps = {
   fetchSymbols,
   changeAmount,
+  changeTargetCurrency,
   calcRate,
   getGraph
 };
