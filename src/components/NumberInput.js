@@ -7,8 +7,8 @@ const NumberInput = ({ onChange }) => (
     <NumberFormat
       hintText="1"
       format="### ### ### ### ### ### ###"
-      customInput={TextField}
       onValueChange={values => onChange(values.value)}
+      style={{ height: '34px' }}
     />
   </div>
 );

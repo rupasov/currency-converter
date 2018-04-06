@@ -35,12 +35,14 @@ export const getGraph = targetCurrency => async dispatch => {
     const historicalData = await Promise.all(
       getDays().map(day => getHistoricalRate(targetCurrency, day))
     );
-    const a = historicalData.map(data => ({
-      x: format(new Date(data.date), 'D-MMM-YY'),
-      y: data.rates[targetCurrency]
-    }));
-    console.log(a);
-    dispatch(saveHistoricalData(historicalData));
+    dispatch(
+      saveHistoricalData(
+        historicalData.map(data => ({
+          x: format(new Date(data.date), 'D-MMM-YY'),
+          y: data.rates[targetCurrency]
+        }))
+      )
+    );
   } catch (e) {
     console.error(e);
   }

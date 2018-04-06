@@ -8,6 +8,7 @@ import { getRate } from './utils/requests';
 import { fetchSymbols, changeAmount, calcRate, getGraph } from './actions';
 import './App.css';
 import { format } from 'date-fns';
+import coupleWithDog from './img/doggos_walk.png';
 
 class App extends Component {
   componentDidMount() {
@@ -17,31 +18,27 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <div>
-            <img src="http://code.divshot.com/geo-bootstrap/img/test/construction.gif" />
-          </div>
-        </div>
         <div
           style={{
-            width: '100%',
+            width: '50%',
             display: 'flex',
+            alignItems: 'center',
             flexDirection: 'column'
           }}
         >
           <br />
           <NumberInput onChange={this.props.changeAmount} />
-          <div>
+          <div style={{ width: '50%', marginBottom: '20px' }}>
             <StatesField
               disabled
               selectValue="EUR"
               options={[{ label: 'EUR - Euro', value: 'EUR' }]}
             />
           </div>
-          <div>
+          <div style={{ width: '50%', marginBottom: '20px' }}>
             <StatesField selectValue="USD" options={this.props.symbols} />
           </div>
-          <div>
+          <div style={{ marginBottom: '20px' }}>
             <RaisedButton
               label="Calc"
               labelColor="#ffffff"
@@ -67,18 +64,14 @@ class App extends Component {
                 axes
                 width={700}
                 height={500}
-                interpolate={'cardinal'}
                 areaColors={['#F3AF75']}
-                grid
-                data={[
-                  this.props.historicalData.map(data => ({
-                    x: format(new Date(data.date), 'D-MMM-YY'),
-                    y: data.rates[this.props.targetCurrency]
-                  }))
-                ]}
+                data={[this.props.historicalData]}
               />
             </div>
           )}
+        </div>
+        <div style={{ width: '50%' }}>
+          <img src={coupleWithDog} style={{ width: '80%' }} />
         </div>
       </div>
     );
