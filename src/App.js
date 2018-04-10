@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
-import { AreaChart } from 'react-easy-chart';
 import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import DropDown from './components/DropDown';
 import NumberInput from './components/NumberInput';
+import Chart from './components/Chart';
 import {
   fetchSymbols,
   changeAmount,
@@ -88,19 +88,7 @@ class App extends Component {
                 />
               </div>
             )}
-            {historicalData.length > 0 && (
-              <div>
-                <AreaChart
-                  xType={'time'}
-                  axes
-                  tickTimeDisplayFormat={'%e %b'}
-                  width={700}
-                  height={500}
-                  areaColors={['#F3AF75']}
-                  data={[historicalData]}
-                />
-              </div>
-            )}
+            {historicalData.length > 0 && <Chart data={historicalData} />}
           </div>
         </div>
         <div className="image-container">
@@ -112,13 +100,13 @@ class App extends Component {
 }
 
 App.propTypes = {
-  amount: PropTypes.number,
+  amount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   changeAmount: PropTypes.func,
   symbols: PropTypes.array,
   calcRate: PropTypes.func,
   getGraph: PropTypes.func,
   changeTargetCurrency: PropTypes.func,
-  convertedValue: PropTypes.string,
+  convertedValue: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   targetCurrency: PropTypes.string,
   historicalData: PropTypes.array
 };

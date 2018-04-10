@@ -16,7 +16,7 @@ const NumberInput = ({ onChange, value }) => (
 
 NumberInput.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
 };
 
 export default NumberInput;
