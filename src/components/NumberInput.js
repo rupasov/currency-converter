@@ -1,5 +1,6 @@
 import React from 'react';
 import NumberFormat from 'react-number-format';
+import PropTypes from 'prop-types';
 
 const NumberInput = ({ onChange, value }) => (
   <div>
@@ -12,5 +13,10 @@ const NumberInput = ({ onChange, value }) => (
     />
   </div>
 );
+
+NumberInput.propTypes = {
+  onChange: PropTypes.func.isRequired,
+  value: PropTypes.number.isRequired
+};
 
 export default NumberInput;

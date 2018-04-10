@@ -43,4 +43,9 @@ class DropDown extends Component {
   }
 }
 
+DropDown.propTypes = {
+  onChange: PropTypes.func,
+  disabled: PropTypes.bool
+};
+
 export default DropDown;

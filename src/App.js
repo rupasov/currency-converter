@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
 import { AreaChart } from 'react-easy-chart';
+import PropTypes from 'prop-types';
 import NumberFormat from 'react-number-format';
 import DropDown from './components/DropDown';
 import NumberInput from './components/NumberInput';
@@ -109,6 +110,18 @@ class App extends Component {
     );
   }
 }
+
+App.propTypes = {
+  amount: PropTypes.number,
+  changeAmount: PropTypes.func,
+  symbols: PropTypes.array,
+  calcRate: PropTypes.func,
+  getGraph: PropTypes.func,
+  changeTargetCurrency: PropTypes.func,
+  convertedValue: PropTypes.string,
+  targetCurrency: PropTypes.string,
+  historicalData: PropTypes.array
+};
 
 const mapStateToProps = ({ currency }) => ({
   symbols: currency.symbols,
