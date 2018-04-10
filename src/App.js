@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import RaisedButton from 'material-ui/RaisedButton';
+import { AreaChart } from 'react-easy-chart';
+import NumberFormat from 'react-number-format';
 import DropDown from './components/DropDown';
 import NumberInput from './components/NumberInput';
-import { AreaChart } from 'react-easy-chart';
 import {
   fetchSymbols,
   changeAmount,
@@ -13,7 +14,6 @@ import {
 } from './actions';
 import './App.css';
 import coupleWithDog from './img/doggos_walk.png';
-import NumberFormat from 'react-number-format';
 
 class App extends Component {
   componentDidMount() {
@@ -34,33 +34,26 @@ class App extends Component {
     } = this.props;
     return (
       <div className="App">
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            flexDirection: 'column',
-            width: '50%'
-          }}
-        >
-          <div style={{ width: '60%' }}>
-            <div style={{ marginBottom: '20px' }}>
-              <NumberInput onChange={changeAmount} value={amount} style={{}} />
+        <div className="converter-container">
+          <div className="width-60">
+            <div className="margin-bottom-20">
+              <NumberInput onChange={changeAmount} value={amount} />
             </div>
-            <div style={{ width: '80%', marginBottom: '20px' }}>
+            <div className="input-container">
               <DropDown
                 disabled
                 selectValue="EUR"
                 symbols={[{ label: 'EUR - Euro', value: 'EUR' }]}
               />
             </div>
-            <div style={{ width: '80%', marginBottom: '20px' }}>
+            <div className="input-container">
               <DropDown
                 selectValue="USD"
                 symbols={symbols}
                 onChange={changeTargetCurrency}
               />
             </div>
-            <div style={{ marginBottom: '20px', width: '80%' }}>
+            <div className="input-container">
               <RaisedButton
                 label="Calculate"
                 fullWidth
@@ -69,7 +62,7 @@ class App extends Component {
                 onClick={() => calcRate(targetCurrency)}
               />
             </div>
-            <div style={{ marginBottom: '60px', width: '80%' }}>
+            <div className="button-container">
               <RaisedButton
                 label="Show Graph"
                 fullWidth
@@ -79,13 +72,7 @@ class App extends Component {
               />
             </div>
             {convertedValue && (
-              <div
-                style={{
-                  border: '1px solid #000',
-                  padding: '10px',
-                  width: '76%'
-                }}
-              >
+              <div className="result-container">
                 <NumberFormat
                   value={parseFloat(amount)}
                   suffix={' EUR = '}
@@ -115,12 +102,8 @@ class App extends Component {
             )}
           </div>
         </div>
-        <div style={{ width: '50%' }}>
-          <img
-            src={coupleWithDog}
-            alt="couple-with-dog"
-            style={{ width: '80%' }}
-          />
+        <div className="image-container">
+          <img className="image" src={coupleWithDog} alt="couple-with-dog" />
         </div>
       </div>
     );

@@ -4,12 +4,11 @@ import NumberFormat from 'react-number-format';
 const NumberInput = ({ onChange, value }) => (
   <div>
     <NumberFormat
-      className="number-format"
+      className="number-input"
       value={value}
       thousandSeparator
       allowNegative={false}
       onValueChange={values => onChange(values.value)}
-      style={{ height: '34px', width: '77%' }}
     />
   </div>
 );

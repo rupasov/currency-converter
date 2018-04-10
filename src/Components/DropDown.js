@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import 'react-select/dist/react-select.css';
-import '../App.css';
 
 class DropDown extends Component {
   state = {
@@ -26,9 +25,6 @@ class DropDown extends Component {
       <div className="section">
         <Select
           id="state-select"
-          ref={ref => {
-            this.select = ref;
-          }}
           onBlurResetsInput={false}
           onSelectResetsInput={false}
           autoFocus
