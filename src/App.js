@@ -43,13 +43,14 @@ class App extends Component {
             <div className="input-container">
               <DropDown
                 disabled
-                selectValue="EUR"
+                targetCurrency="EUR"
                 symbols={[{ label: 'EUR - Euro', value: 'EUR' }]}
               />
             </div>
             <div className="input-container">
               <DropDown
-                selectValue="USD"
+                disabled={false}
+                targetCurrency={targetCurrency}
                 symbols={symbols}
                 onChange={changeTargetCurrency}
               />
