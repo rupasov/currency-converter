@@ -4,16 +4,13 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Provider } from 'react-redux';
-
 import reducers from './reducers';
-
-import './index.css';
 import App from './App';
 
 const middlewares = [];
 
-if (process.env.NODE_ENV === `development`) {
-  const { logger } = require(`redux-logger`);
+if (process.env.NODE_ENV === 'development') {
+  const { logger } = require('redux-logger');
   middlewares.push(logger);
 }
 

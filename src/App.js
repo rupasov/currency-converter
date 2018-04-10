@@ -4,7 +4,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import DropDown from './components/DropDown';
 import NumberInput from './components/NumberInput';
 import { AreaChart } from 'react-easy-chart';
-import { getRate } from './utils/requests';
 import {
   fetchSymbols,
   changeAmount,
@@ -13,7 +12,6 @@ import {
   changeTargetCurrency
 } from './actions';
 import './App.css';
-import { format } from 'date-fns';
 import coupleWithDog from './img/doggos_walk.png';
 import NumberFormat from 'react-number-format';
 
@@ -45,8 +43,9 @@ class App extends Component {
           }}
         >
           <div style={{ width: '60%' }}>
-            <br />
-            <NumberInput onChange={changeAmount} value={amount} />
+            <div style={{ marginBottom: '20px' }}>
+              <NumberInput onChange={changeAmount} value={amount} style={{}} />
+            </div>
             <div style={{ width: '80%', marginBottom: '20px' }}>
               <DropDown
                 disabled
@@ -72,7 +71,7 @@ class App extends Component {
             </div>
             <div style={{ marginBottom: '60px', width: '80%' }}>
               <RaisedButton
-                label="Gimme Da Graph"
+                label="Show Graph"
                 fullWidth
                 labelColor="#ffffff"
                 backgroundColor="#4568E5"
@@ -106,6 +105,7 @@ class App extends Component {
                 <AreaChart
                   xType={'time'}
                   axes
+                  tickTimeDisplayFormat={'%e %b'}
                   width={700}
                   height={500}
                   areaColors={['#F3AF75']}
@@ -116,7 +116,11 @@ class App extends Component {
           </div>
         </div>
         <div style={{ width: '50%' }}>
-          <img src={coupleWithDog} style={{ width: '80%' }} />
+          <img
+            src={coupleWithDog}
+            alt="couple-with-dog"
+            style={{ width: '80%' }}
+          />
         </div>
       </div>
     );
